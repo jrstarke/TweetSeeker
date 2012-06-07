@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}About TweetSeeker{% endblock %}
+
+{% block content %}
+
+<p>This tool was made by <a href="http://www.jamiestarke.com">Jamie Starke</a>, a PhD Student in the CHISEL group at the 
+University of Victoria.</p>
+
+<p>The reason that I started this tool was based on my own experience. There were a few occasions where I needed to be
+able to look back at particular users Tweets, say, 6 months back. Unfortunately, after spending a few hours looking, I found
+that the existing tools out there (like Twitter's Advanced Search) just didn't do the trick, and were limited to about the
+past 30 days. This tool on the other hand is not limited to the past 30 days, and instead, limited based on the amount of
+tweets by the user. We are able to give you access to approximately the last 3200 tweets by any user.</p>
+
+<p>I run this tool on the Google App Engine. The main reason for this was to allow me to get the tool out there, without 
+a large server hosting cost. Of course, as a student, I don't have a lot of surplus money to devote to projects such as this.</p>
+
+<p>If you have any feedback on the project, I would love to hear from you. You can email me at jrstarke[at]gmail[dot]com.</p>
+
+<p>Also, if you found this tool useful, please consider making a <a href="/donate">donation</a>.
+
+{% endblock %}

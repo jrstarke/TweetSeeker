@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<a href="/auth/login">Continue to Twitter Authorization --></a>
+
+<p><strong>Why does TweetSeeker require you to login?</strong></p>
+
+<p>This allows us to make Twitter requests on your behalf. We only use the login to get an authorization key from 
+Twitter to make requests on your behalf to gather the information you request.</p>
+
+<p><strong>What information are you taking from my Twitter account?</strong></p>
+
+<p>No personal information from your account is requested or stored. </p>
+
+<a href="/auth/login">Continue to Twitter Authorization --></a>
+
+{% endblock %}

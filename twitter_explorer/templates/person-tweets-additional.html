@@ -1,0 +1,18 @@
+{% autoescape off %}
+{% if statuses %}
+    {% for status in statuses %}
+        <li><div class="status-text">{{status.text|safe}}</div>
+        	<div class="status-date">{{status.created_at}}</div>
+        	{% if status.in_reply_to_status_id %}
+        		<div id="{{status.status_id}}" class="status-reply">Toggle conversation</div>
+       			<div id="{{status.status_id}}-conversation" class="conversation-view">
+					<ul>
+						<div id="conv-tweet-{{status.status_id}}"><img src="/static/loading.gif" /></div>
+					</ul>
+				</div>
+        	{% endif %}
+        </li>
+    {% endfor %}
+    	<div id="more-statuses"><img src="/static/loading.gif" /></div>
+{% endif %}
+{% endautoescape %}

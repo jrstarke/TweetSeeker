@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<p>TweetSeeker is an app to help you find those tweets that are a pain to find otherwise. If you know the screenname of the user 
+and approximately when they said it, then we can help you quickly narrow down the tweets you have to look at.</p>
+
+<p>TweetSeeker grabs the most recent 3200 tweets from a user, and then allows you to dynamically specify the date range that you're
+interested in.</p>
+
+{% if user %}
+<p>If you're ready to try it out, place the twitter ID of the user you're interested in exploring the search box above, and hit <strong>Seek.</strong></p>
+{% else %}
+<p>Although TweetSeeker supports use by unauthenticated users, we highly recommend you <a href="/login">login</a> have a consistent experience.
+This is due to Twitter's rate limiting restrictions. Without logging in, the system might stop unexpectedly.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% autoescape off %}
+{% if statuses %}
+	<ul>
+    {% for status in statuses %}
+        <li><div class="status-person-image"><img src="{{status.person.profile_image_url}}" style="float:left; padding:10px;" /></div>
+        	<div class="status-person-name"><a href="/user/{{status.person.screen_name}}" rel="nofollow">{{status.person.screen_name}}</a></div>
+        	<div class="status-text">{{status.text|safe}}</div>
+        	<div class="status-date">{{status.created_at}}</div>
+        	{% if status.in_reply_to_status_id %}
+        		<div id="{{status.status_id}}" class="status-reply">Toggle conversation</div>
+       			<div id="{{status.status_id}}-conversation" class="conversation-view">
+					<ul>
+						<div id="conv-tweet-{{status.status_id}}"><img src="/static/loading.gif" /></div>
+					</ul>
+				</div>
+        	{% endif %}
+        </li>
+    {% endfor %}
+    	<div id="more-statuses"><img src="/static/loading.gif" /></div>
+    </ul>
+{% else %}
+    <p>Sorry, no statuses</p>
+{% endif %}
+{% endautoescape %}

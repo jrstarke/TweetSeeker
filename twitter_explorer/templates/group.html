@@ -1,0 +1,270 @@
+{% extends 'layout.html' %}
+{% block script %}
+	<script src="http://code.jquery.com/jquery-1.5.js"></script>
+	<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+	<!--
+	var complete = false; // This will be used to run the update loop
+	var count = 0;
+	var usersCompleted = 0;
+	var loaded = false;
+	var waitSeconds = 4
+	
+	function updateAPIs(calls)
+	{
+		message = '<span id="api_calls">'+ calls + '</span>';
+		$('#api_calls').replaceWith(message);
+	}
+	
+	function replaceStatus(count)
+	{
+		var message = '<span id="status_message">' + count + ' statuses have been collected. You can now start to explore, however the overall responsiveness might be low while we collect the remaining statuses.</span>';
+		$('#status_message').replaceWith(message);
+	}
+	
+	function toArray(data)
+	{
+		var jsonValues = [];
+		$.each(data, function(key, val) {
+			jsonValues[key] = val;
+		});
+		return jsonValues;
+	}
+	
+	function getStatus() {
+		$.getJSON('/group/{{ group.short_name }}/tweets-background', updateStatus);
+	}
+	
+	function updateStatus(data) {
+		if (! loaded)
+		{
+			loadTweets()
+		}
+		var jsonValues = toArray(data);
+		if (jsonValues['api_calls'] != null)
+		{
+			updateAPIs(jsonValues['api_calls']);
+		}
+		var oldest = jsonValues['oldest_date'];
+		var oldMin = minDate
+		if (oldest != null)
+		{
+			minDate = new Date(oldest['year'], oldest['month']-1, oldest['day']);
+		}
+		if (start == null || oldMin == start)
+		{
+			start = minDate
+		}
+		var newest = jsonValues['latest_date'];
+		var oldMax = minDate
+		if (newest != null)
+		{
+			maxDate = new Date(newest['year'], newest['month']-1, newest['day']);
+		}
+		if (end == null || oldMax == end)
+		{
+			end = maxDate
+		}
+		if (start != null && end != null)
+		{
+			sliderInit()
+		}
+		if (jsonValues['complete'] == false)
+		{
+			count = jsonValues['num_statuses'];
+			replaceStatus(count);
+
+			window.setTimeout(getStatus,1000*waitSeconds);
+		}
+		else 
+		{
+			$('#status').remove();
+		}
+	}
+	
+	function loadTweets() {
+		loadCount = 1;
+		if (loaded == false)
+		{
+			$("#statuses").load("/group/{{ group.short_name }}/tweets",function () {
+				loaded = true;
+				$('#statuses').show('fast');
+			});
+		}
+		else
+		{
+			var start_str = formatDate(start);
+			var end_str = formatDate(end);
+			var aQuery = $('#query').val();
+			if (aQuery.length > 0)
+			{
+				aQuery = aQuery.replace(" ","%20");
+				aQuery = "&q="+ aQuery;
+			}
+			$("#statuses").load("/group/{{ group.short_name }}/tweets?start="+ start_str +"&end="+ end_str + aQuery);
+		}
+	}
+	
+	function formatDate(date) {
+		date = new Date(date.getTime() + 86400000);
+		var output = date.getFullYear();
+		if (date.getMonth() > 8)
+		{
+			output += "-" + (date.getMonth()+1);
+		}
+		else
+		{
+			output += "-0" + (date.getMonth()+1);
+		}
+		if (date.getDate() < 9)
+		{
+			output += "-0" + date.getDate();
+		}
+		else
+		{
+			output += "-" + date.getDate();
+		}
+		return output;
+	}
+
+	var start = null;
+	var end = null;
+	var minDate;
+	var maxDate;
+	var slider;
+	var startDate;
+	var endDate;
+	function sliderInit() {
+		
+    	slider = $('#slider').slider({range: true, max: daysDiff(minDate, maxDate),
+            slide: function(event, ui) { resync(ui.values); }, stop: function() { loadTweets(); }, values: [daysDiff(minDate,start),daysDiff(minDate, end)]});
+    	startDate = $('#startDate').datepicker({minDate: minDate, maxDate: maxDate,
+            onSelect: function(dateStr) { resync(); loadTweets();}}).
+        	keyup(function() { resync(); });
+        startDate.val($.datepicker.formatDate('mm/dd/yy', start));
+        startDate.datepicker('option', 'minDate', minDate);
+    	endDate = $('#endDate').datepicker({minDate: minDate, maxDate: maxDate,
+            onSelect: function(dateStr) { resync(); loadTweets();}}).
+        	keyup(function() { resync(); });
+        endDate.val($.datepicker.formatDate('mm/dd/yy', end));
+        endDate.datepicker('option', 'maxDate', maxDate);
+        $('#selection').show('fast');
+	}
+
+	function resync(values) {
+    	if (values) {
+      		var date = new Date(minDate.getTime());
+        	date.setDate(date.getDate() + values[0]);
+        	startDate.val($.datepicker.formatDate('mm/dd/yy', date));
+        	start = date
+        	date = new Date(minDate.getTime());
+        	date.setDate(date.getDate() + values[1]);
+        	endDate.val($.datepicker.formatDate('mm/dd/yy', date));
+        	end = date
+    	}
+    	else {
+    		start = startDate.datepicker('getDate')
+        	startOffset = daysDiff(minDate, start || minDate);
+        	end = endDate.datepicker('getDate')
+        	endOffset = daysDiff(minDate, end || maxDate);
+        	startOffset = Math.min(startOffset, endOffset);
+        	slider.slider('values', 0, startOffset);
+        	slider.slider('values', 1, endOffset);
+    	}
+    	startDate.datepicker('option', 'maxDate', endDate.datepicker('getDate') || maxDate);
+    	endDate.datepicker('option', 'minDate', startDate.datepicker('getDate') || minDate);
+	}
+
+	function daysDiff(d1, d2) {
+    	return  Math.floor((d2.getTime() - d1.getTime()) / 86400000);
+	}
+
+	var loadCount = 1;
+	var loading = false;
+	function loadMoreTweets () {
+		if (!loading)
+		{
+			loading = true;
+			var start_str = formatDate(start);
+            var end_str = formatDate(end);			
+			var aQuery = $('#query').val();
+			
+			if (aQuery.length > 0)
+			{
+				aQuery = aQuery.replace(" ","%20");
+				aQuery = "&q="+ aQuery;
+			}
+			$.get('/group/{{ group.short_name }}/tweets/' + loadCount + "?start="+start_str+"&end="+end_str+aQuery, function(data) {
+  				$('#more-statuses').replaceWith(data);
+  				loadCount++; 
+				loading = false;
+  			});
+		}
+	}
+
+	function loadConversation(nextstatus) {
+		$.getJSON('/status/'+ nextstatus, function(data) {
+			var jsonValues = toArray(data);
+			$('#conv-tweet-'+nextstatus).replaceWith(jsonValues['status']);
+			if (jsonValues['next_status'] != 'None')
+			{
+				loadConversation(jsonValues['next_status']);
+			}
+
+		});
+	}	
+
+	$(window).scroll(function(){
+		var windowHeight = $(window).height();
+		var documentHeight = $(document).height();
+		var scrollTop = $(window).scrollTop();
+        if  (scrollTop > (documentHeight - windowHeight) - 200){
+           loadMoreTweets();
+        }
+	});
+	
+	$(document).ready(function() {
+		$('#query').keypress(function(e) {
+			if (e.which == 13){
+				e.preventDefault();
+				loadTweets();
+			}
+		});
+	});
+	
+	$(".status-reply").live("click", function() {
+		loadConversation(this.id);
+		var callId = this.id;
+		$('#' + this.id + '-conversation').toggle('fast');
+	});
+
+	window.onload = getStatus
+	-->
+	</script>
+
+{% endblock %}
+{% block content %}
+{% if group %}
+	<h1>{% block title %}{{ group.name }}{% endblock %}</h1>
+	
+	<div id="updates">
+		<div id="status">
+			<p><img src="/static/loading.gif" /><span id="status_message">Collecting Tweets</span></p>
+		</div>
+		<div id="selection" style="display:none;">
+			<fieldset>
+			<div id="queryForm"><label for="query">Keywords:</label><input type="text" id="query" name="query" value="" /></div>
+			<span id="startForm"><label for="startDate">From:</label><input type="text" id="startDate" name="startDate" value="" /></span><span id="endForm"><label for="endDate">To:</label><input type="text" id="endDate" name="endDate" value="" /></span>  
+			<div id="slider"></div>
+			</fieldset>
+		</div>
+		<div id="statuses"></div>
+	</div>
+	
+{% else %}
+    <p>Sorry, you don't have a group by that name.</p>
+    <p>If you'd like, you could <a href="/group-add">add a new group</a>.
+{% endif %}
+{% endblock %}

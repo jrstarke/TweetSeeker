@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>{% block title %}Groups for {{ user.username }}{% endblock %}</h1>
+
+<p>
+	<a href="/group-add">Add a group</a>
+</p>
+
+{% if groups %}
+	<ul>
+		<li><div class="group-name">Groups</div></li>
+    {% for group in groups %}
+        <li><div class="group-name"><a href="/group/{{group.short_name}}">{{group.name}}</a></div>
+        	<div class="group-delete"><a href="/group/{{group.short_name}}/delete">Remove this group</a></div>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You currently have no groups.</p>
+{% endif %}
+
+{% endblock %}

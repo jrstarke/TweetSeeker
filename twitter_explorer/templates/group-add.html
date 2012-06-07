@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>{% block title %}Add a group{% endblock %}</h1>
+
+<p>Please provide the following information so that a group can be created for you.</p>
+<p>The group name should contain only numbers, letters or spaces. Optionally you could try our web page <a href="/group-add/generate">extraction tool</a>.</p>
+
+<form action="/group-add" method="post">{% csrf_token %}
+{% for error in errors %}
+	<p><strong>{{ error }}</strong></p>
+{% endfor %}
+
+<p><label for="name">Group name:</label>&nbsp;
+<input id="name" name="name" type="text" value="{{ name }}" class="text" /></p>
+<label for="short_name">Twitter names for members of the group (separated by commas):</label>&nbsp;
+<textarea id="name" name="member_names" rows="10" cols="30">
+{{ member_names }}
+</textarea>
+<p><input type="submit" value="Create" class="button" /></p>
+
+{% endblock %}

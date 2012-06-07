@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="/static/style.css" /> 
+    {% block script %} {% endblock %}
+    <title>{% block title %}TweetSeeker{% endblock %}</title>
+    
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-69155-25']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+		<div id="header">
+			<h1><a href="/">TweetSeeker</a></h1>
+		</div
+    	<div id="utils">
+    		<div id="menu">
+       		 {% block toolbar %}
+       		 <ul>
+       			<li><a href="/">Home</a></li>
+           		<li><a href="/about">About</a></li>
+            	<li><a href="/group">Groups</a></li>
+        	</ul>
+        	{% endblock %}
+        	</div>
+    	</div>
+    
+    	<div id="search">
+    		<form name="input" action="/user" method="get">
+			<label>Please enter the Twitter user to explore:</label>
+			<input type="text" name="screen_name" value="{{ person.screen_name }}"/>
+			<input type="submit" value="Seek" />
+			</form>
+		</div>
+    
+    	<div id="userauth">
+    	{% if user %}
+    		Logged in as {{ user.username }}<br />
+    		<span id="api_calls">{{ user.rate_remaining }}</span> Calls Remaining<br />
+    		<a href="/logout">Logout</a>
+    	{% else %}
+    		<a href="/login">Login</a>
+    	{% endif %}
+    	</div>
+    	
+    	<div id="right-sidebar">
+    	</div>
+
+    	<div id="content">
+        	{% block content %}{% endblock %}
+    	</div>
+    
+    	<div id="footer">
+    		App and Design &copy; <a href="http://www.jamiestarke.com">Jamie Starke</a>, 2011.<br />
+    		Tweets made available by Twitter.
+    	</div>
+</body>
+</html>

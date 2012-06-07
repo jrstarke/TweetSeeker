@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>{% block title %}Generate a Group{% endblock %}</h1>
+
+{% for error in errors %}
+	<p><strong>{{ error }}</strong></p>
+{% endfor %}
+
+{% if member_names %}
+<p>Here is list of users we extracted from the URL you provided</p>
+
+<form action="/group-add" method="post">{% csrf_token %}
+<p><label>Comma-separated Value of users extracted from the provided webpage.</label></p>
+<textarea id="member_names" name="member_names" rows="10" cols="30">
+{{ member_names }}
+</textarea>
+<input type="hidden" name="auto_gen" value="True" />
+<input type="submit" value="Create Group" class="button" />
+
+{% else %}
+<p>Please provide the URL you would like to extract the data from.</p>
+<p>We will extract the twitter users from the links to the users twitter accounts on this page.</p>
+
+<form action="/group-add/generate" method="post">{% csrf_token %}
+<label for="url">URL:</label><input id="url" name="url" type="text" value="{{ url }}" />
+<input type="submit" value="Extract" class="button" />
+
+{% endif %}
+
+{% endblock %}
