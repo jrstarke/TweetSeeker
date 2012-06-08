@@ -58,7 +58,9 @@ in your project.
 
 ### Production Build
 
-A production ready system should still have the API 
+A production ready system should still have the API settings from the development version
+above. If you have not build the development version, go back and do that first. There
+are common settings in the development version that will also be used by the production version.
 
 The first step to taking this to production, like with the development build, its
 to fill in the settings variables. For this, we have created a settings.py file in the
