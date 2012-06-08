@@ -43,6 +43,6 @@ if settings.DEBUG:
     urlpatterns += patterns('django.views.static',
     (r'^static/(?P<path>.*)$', 
         'serve', {
-        'document_root': 'C:/Users/jstarke/Development/hg-projects/jamies-repo/twitter_explorer/src/static',
+        'document_root': settings.DEBUG_STATIC_DIR,
         'show_indexes': True }),)
 

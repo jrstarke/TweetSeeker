@@ -31,6 +31,8 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+DEBUG_STATIC_DIR = 'C:/Users/jstarke/Development/hg-projects/jamies-repo/twitter_explorer/src/static'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

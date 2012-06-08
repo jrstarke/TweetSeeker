@@ -39,6 +39,11 @@ For many of the commands, it is important to place yourself at the base of the p
 and then tell django where it can find the settings file. This can be done using the
 `--settings=twitter_explorer.settings` flag.
 
+By default, django is not set up to serve static files, such as the css template used by
+TweetSeeker.  To make this work, we have defined a variable in settings called `DEBUG_STATIC_DIR`.
+This will tell django's `runserver` to serve these file, while debug is turned on, and we
+are working with the development build.
+
 Finally, you should set the [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.  This should be an absolute path
 to tell django where it can find all of the templates. This should point to
 the layout/templates directory under the project.
@@ -65,16 +70,17 @@ This can be the same as the secret key used in the development build above.
 Next you will need to set your [Databases](https://docs.djangoproject.com/en/dev/ref/settings/#databases)
 for production use. Again, for performance reasons, we would recommend a more robust.
 
-Like with the development system above, we will now use django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated tables in the database.
+Before we Like with the development system above, we will now use django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated tables in the database.
 Again, it is important to place yourself at the base of the project,
 and then tell django where it can find the settings file. This can be done using the
-`--settings=twitter_explorer.settings` flag.
+`--settings=release.settings` flag.
 
 Finally, you should set your [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.
 Because this is for a production system, this will likely be different than the one used in the development system, but
 again, it should be the absolute path.
 
-At this point, the production version of TweetSeeker is ready to be deployed.
+At this point, the production version of TweetSeeker is ready to be deployed. If you'd like to try it out,
+you can use 
 
 ### Deploying TweetSeeker
 
