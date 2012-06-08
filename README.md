@@ -6,6 +6,7 @@ A research tool to help with on-the-fly collection and exploration of tweets.
 Requirements
 ---------------
 
+
 This project uses [django](https://www.djangoproject.com/), and was developed 
 using [Python 2.7](http://www.python.org/download/). 
 
@@ -33,7 +34,10 @@ you can use sqlite3. For performance reasons, we recommend using a more robust
 database for heavier uses.
 
 Once your database settings are in place, you can use 
-django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated database and tables.
+django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated tables in the database.
+For many of the commands, it is important to place yourself at the base of the project,
+and then tell django where it can find the settings file. This can be done using the
+`--settings=twitter_explorer.settings` flag.
 
 Finally, you should set the [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.  This should be an absolute path
 to tell django where it can find all of the templates. This should point to
@@ -43,3 +47,45 @@ At this point, the project should be completely ready to try out.
 
 To try out the project run django's [runserver command](https://docs.djangoproject.com/en/dev/ref/django-admin/#runserver-port-or-address-port). 
 You can choose the port that you'd like to run it on, but by default, it runs on [localhost:8000](http://localhost:8000).
+Like `syncdb` above, use the `--settings` flag to tell django where it can find the settings
+in your project.
+
+
+### Production Build
+
+A production ready system should still have the API 
+
+The first step to taking this to production, like with the development build, its
+to fill in the settings variables. For this, we have created a settings.py file in the
+release folder, that will be used for production releases. 
+
+Like in the Development build above, you will need to set the [SECRET_KEY](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key).
+This can be the same as the secret key used in the development build above.
+
+Next you will need to set your [Databases](https://docs.djangoproject.com/en/dev/ref/settings/#databases)
+for production use. Again, for performance reasons, we would recommend a more robust.
+
+Like with the development system above, we will now use django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated tables in the database.
+Again, it is important to place yourself at the base of the project,
+and then tell django where it can find the settings file. This can be done using the
+`--settings=twitter_explorer.settings` flag.
+
+Finally, you should set your [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.
+Because this is for a production system, this will likely be different than the one used in the development system, but
+again, it should be the absolute path.
+
+At this point, the production version of TweetSeeker is ready to be deployed.
+
+### Deploying TweetSeeker
+
+If you have followed the steps above, you will have a fully prepared django project.
+
+At this point, you can choose any deployment method for django. The options can be found at
+[Deploying Django](https://docs.djangoproject.com/en/1.4/howto/deployment/).
+
+I personally have experience deploying django applications with Apache and WSGI, so this is 
+what I would recommend. The remainder will deal with deployment with WSGI, so your own experiences
+may differ.
+
+ 
+
