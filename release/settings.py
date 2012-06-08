@@ -31,6 +31,13 @@ DATABASES = {
 # This defines the email address that any messages from the server will come from
 #SERVER_EMAIL = '',
 
+TEMPLATE_DIRS = (
+                 "/home/jstarke/twitter_explorer/src/layout/templates"
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -87,13 +94,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'twitter_explorer.urls'
-
-TEMPLATE_DIRS = (
-                 "/home/jstarke/twitter_explorer/src/layout/templates"
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
 
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
