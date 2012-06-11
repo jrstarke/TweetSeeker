@@ -6,6 +6,8 @@ A research tool to help with on-the-fly collection and exploration of tweets.
 Requirements
 ---------------
 
+* Python 2.7
+* Django
 
 This project uses [django](https://www.djangoproject.com/), and was developed 
 using [Python 2.7](http://www.python.org/download/). 
@@ -82,7 +84,13 @@ Because this is for a production system, this will likely be different than the 
 again, it should be the absolute path.
 
 At this point, the production version of TweetSeeker is ready to be deployed. If you'd like to try it out,
-you can use 
+you can use `django-admin runserver --settings=release.settings` to run a local copy of it.
+You may need to set your python path, if you get a get a message such as `Could not import settings 'release.settings'`.
+
+**Note:** Staticly served resources will not be served by default. Should you want to serve these files for testing purposes, you can 
+set the `DEBUG_STATIC_DIR` variable to the absolute path of your static directory on the production
+system.  This should not be used for more than testing the production installation, and these
+static resources should instead be served by the webserver directly. See deploying TweetSeeker below for more details.
 
 ### Deploying TweetSeeker
 
@@ -94,6 +102,14 @@ At this point, you can choose any deployment method for django. The options can 
 I personally have experience deploying django applications with Apache and WSGI, so this is 
 what I would recommend. The remainder will deal with deployment with WSGI, so your own experiences
 may differ.
+
+I will also assume that you're are hosting with an Apache server, again, because that's what I have
+experience with.
+
+First off, you should have a working installation of Apache working.  This can easily be done
+with [Ubuntu Server](http://www.ubuntu.com/download/server).
+
+
 
  
 
