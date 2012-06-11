@@ -1,6 +1,5 @@
 import os
 import sys
-from repoze.errorlog import ErrorLog
 
 # This defines the settings used for release configuration
 os.environ['DJANGO_SETTINGS_MODULE'] = 'release.settings'
