@@ -32,11 +32,13 @@ DATABASES = {
 #SERVER_EMAIL = '',
 
 TEMPLATE_DIRS = (
-                 "/home/jstarke/twitter_explorer/src/layout/templates"
+                 "/home/jstarke/TweetSeeker/layout/templates"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+DEBUG_STATIC_DIR = '/home/jstarke/TweetSeeker/static'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
