@@ -10,6 +10,6 @@ application = django.core.handlers.wsgi.WSGIHandler()
 application = ErrorLog(application, channel=None, keep=100, path='/__error_log__',ignored_exceptions=())
 
 # this is the path to your project so that it can find the enviroment above
-path = '/home/jstarke/twitter_explorer/src'
+path = '/home/jstarke/TweetSeeker'
 if path not in sys.path:
     sys.path.append(path)
