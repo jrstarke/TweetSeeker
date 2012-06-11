@@ -104,12 +104,37 @@ what I would recommend. The remainder will deal with deployment with WSGI, so yo
 may differ.
 
 I will also assume that you're are hosting with an Apache server, again, because that's what I have
-experience with.
+experience with. If you don't already have an Apache server, I recommend [Ubuntu Server](http://www.ubuntu.com/download/server), 
+as I have always found it fast and easy to install and deploy. To use WSGI, you will want to
+also install Apache's WSGI module.
 
-First off, you should have a working installation of Apache working.  This can easily be done
-with [Ubuntu Server](http://www.ubuntu.com/download/server).
+Before setting up the virtual server configuration, you will want to set up your `django.wsgi`
+configuration to correctly respond to requests.  This file is fairly generic, so you should
+only need to set the `path = '[Base path of TweetSeeker]'` to the proper location.
 
+Next you will want to define your Apache Virtual Server configuration. To get started, you can use
+the following overly simplified example.
 
+```
+<VirtualHost *:80>
+             DocumentRoot /path/to/TweetSeeker
 
- 
+             ServerName your.server.name
+
+             Alias /robots.txt /path/to/TweetSeeker/static/robots.txt
+             Alias /favicon.ico /path/to/TweetSeeker/static/favicon.ico
+
+             Alias /static/ /path/to/TweetSeeker/static/
+
+             WSGIScriptAlias / /path/to/TweetSeeker/django.wsgi
+</VirtualHost>
+```
+
+In the above example, you will need to change `/path/to/TweetSeeker` to the actual path of
+the base instalation of TweetSeeker.  For our purposes, we have defined a server name
+that the system will respond to.  This can be changed to a port by telling Apache to respond
+to the port using the `Listen` setting in the Apache config, and changing `<VirtualHost *:80>` to `<VirtualHost *:[your port]>` 
+in the Virtual Server Configuration.
+
+Your installation, if everything has worked properly, should now be working as expected.
 
