@@ -38,8 +38,6 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-DEBUG_STATIC_DIR = '/home/jstarke/TweetSeeker/static'
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
