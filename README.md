@@ -78,7 +78,7 @@ Before you can run TweetSeekers commands, you need to tell your environment wher
 This can be done by setting your `PYTHONPATH` environment variable. The rest of these commands will be executed
 in your Shell of choice, be it a Linux Terminal or the Windows Command Line.
 
-** Linux, Unix and Mac OS X **
+**Linux, Unix and Mac OS X**
 
 If the path to your TweetSeeker installation is `/home/users/auser/TweetSeeker` you would want to execute 
 the following:
