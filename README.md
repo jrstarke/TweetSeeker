@@ -3,6 +3,13 @@ TweetSeeker
 
 A research tool to help with on-the-fly collection and exploration of tweets.
 
+Getting Help
+------------
+
+I'm always happy to help. If you have a problem along the way, or have a question, feel free to [post an Issue](https://github.com/jrstarke/TweetSeeker/issues/new).
+I check them frequently, and it helps me keep track of what problems there might be along the way.
+
+
 Requirements
 ---------------
 
@@ -18,8 +25,6 @@ have a working installation of both.
 
 Getting Started
 ---------------
-
-
 
 ### Development build
 
@@ -228,10 +233,4 @@ to the port using the `Listen` setting in the Apache config, and changing `<Virt
 in the Virtual Server Configuration.
 
 Your installation, if everything has worked properly, should now be working as expected.
-
-
-### Getting Help
-
-I'm always happy to help. If you have a problem along the way, or have a question, feel free to [post an Issue](https://github.com/jrstarke/TweetSeeker/issues/new).
-I check them frequently, and it helps me keep track of what problems there might be along the way.
 
