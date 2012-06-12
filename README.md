@@ -91,7 +91,7 @@ Otherwise run:
 
 `export PYTHONPATH=$PYTHONPATH:/home/users/auser/TweetSeeker`
 
-** Windows **
+**Windows**
 
 If the path to your TweetSeeker installation was `C:\Users\aUser\TweetSeeker` you would want to execute 
 the following command:
