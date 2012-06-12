@@ -25,52 +25,98 @@ Getting Started
 
 When you first clone or extract TweetSeeker, the base directory of the project should look something like
 
-     auth
-     django.wsgi
+     auth/
+     layout/
+     release/
+     static/
+     test/
+     twitter/
+     twitter_explorer/
      .git
-     layout
+     django.wsgi
      LICENSE
      README.md
-     release
-     static
-     test
-     twitter
-     twitter_explorer
-
+     
 There are three important files that we will be working with to get you up and running.
 
 1. *twitter_explorer/settings.py* : This is where you will locate main configuration for your installation of TweetSeeker, including the important locations and Twitter API keys.
 2. *release/settings.py* : This is where you will located the production configuration of your installation of TweetSeeker. We will cover this more in [Production Build](#production-build)
 3. *django.wsgi* : This will tell your webserver how to run TweetSeeker. We will cover this more in [Deploying TweetSeeker](#deploying-tweetseeker)
 
-To get started with a development build, you will need to set a number of settings 
-in the settings.py file, located within twitter_explorer.
+#### Configuring TweetSeeker
 
-First and foremost, you should set the 
+To get started, we need to set a number of configuration settings. To do this, first open the file: 
+
+`twitter_explorer/settings.py`
+
+1. Set the 
 [SECRET_KEY](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key) for django.
 
-Next, to be able to access the Twitter API, you will need to add your twitter API keys. 
+2. Add your Twitter API Keys, so that you will be able to access the Twitter API. 
 If you do not currently have a Twitter API key, you can create one by 
-[creating a new application](https://dev.twitter.com/apps/new).
+[creating a new application](https://dev.twitter.com/apps/new). Set the `TWITTERAUTH_KEY` to your Consumer key,
+and `TWITTERAUTH_SECRET` to your Consumer Secret.
 
-Next your [Databases](https://docs.djangoproject.com/en/dev/ref/settings/#databases) should be configured. For the most basic development version, 
-you can use sqlite3. For performance reasons, we recommend using a more robust 
-database for heavier uses.
+3. Set the [Databases](https://docs.djangoproject.com/en/dev/ref/settings/#databases) configuration. For the most 
+basic development version, we have set this to an sqlite3 database to get you started. For performance 
+reasons, we recommend using a more robust database for heavier uses.
 
-Once your database settings are in place, you can use 
+4. Set the [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.  
+This should be an absolute path to tell django where it can find all of the templates. This should point to
+the `layout/templates` directory under the project. For instance, if your TweetSeeker path was `/home/users/auser/TweetSeeker`,
+this would be set to `/home/users/auser/TweetSeeker/layout/templates`.
+
+5. Set the `DEBUG_STATIC_DIR` variable. this sohuld point to the absolute path of the `static` directory within
+your TweetSeeker installation. By default, django is not set up to serve static files, such as the css template 
+used by TweetSeeker.  To make this work, we have defined a variable in settings called `DEBUG_STATIC_DIR`.
+This will tell django's `runserver` how to serve these file, while debug is turned on, and we
+are working with the development build.
+
+#### Configuring your environment
+
+Before you can run TweetSeekers commands, you need to tell your environment where it can find TweetSeeker. 
+This can be done by setting your `PYTHONPATH` environment variable. 
+
+** Linux, Unix and Mac OS X **
+
+If the path to your TweetSeeker installation is `/home/users/auser/TweetSeeker` you would want to execute 
+the following:
+
+If you run `echo $PYTHONPATH`, and you get a blank line, run: 
+
+`export PYTHONPATH=/home/users/auser/TweetSeeker`
+
+Otherwise run: 
+
+`export PYTHONPATH=$PYTHONPATH:/home/users/auser/TweetSeeker`
+
+** Windows **
+
+If the path to your TweetSeeker installation was `C:\Users\aUser\TweetSeeker` you would want to execute 
+the following command:
+
+If you run `set PYTHONPATH`, and you get a `Environment Variable PYTHONPATH not defined, run: 
+
+`set PYTHONPATH=C:\Users\aUser\TweetSeeker`
+
+Otherwise run: 
+
+`set PYTHONPATH=%PYTHONPATH%;C:\Users\aUser\TweetSeeker`
+
+#### Initialize the database 
+
+Now we're ready to initialize and sync the database. To do this, you can use 
 django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated tables in the database.
 For many of the commands, it is important to place yourself at the base of the project,
 and then tell django where it can find the settings file. This can be done using the
 `--settings=twitter_explorer.settings` flag.
 
-By default, django is not set up to serve static files, such as the css template used by
-TweetSeeker.  To make this work, we have defined a variable in settings called `DEBUG_STATIC_DIR`.
-This will tell django's `runserver` to serve these file, while debug is turned on, and we
-are working with the development build.
+To complete this, if you're in the base directory of TweetSeeker, you can run the command:
 
-Finally, you should set the [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.  This should be an absolute path
-to tell django where it can find all of the templates. This should point to
-the layout/templates directory under the project.
+`django-admin syncdb --settings=twitter_explorer.settings`
+
+
+#### Running TweetSeeker
 
 At this point, the project should be completely ready to try out.  
 
@@ -78,6 +124,10 @@ To try out the project run django's [runserver command](https://docs.djangoproje
 You can choose the port that you'd like to run it on, but by default, it runs on [localhost:8000](http://localhost:8000).
 Like `syncdb` above, use the `--settings` flag to tell django where it can find the settings
 in your project.
+
+To complete this, if you're in the base directory of TweetSeeker, you can run the command: 
+
+`django-admin runserver --settings=twitter_explorer.settings`
 
 
 ### Production Build
