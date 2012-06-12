@@ -229,3 +229,9 @@ in the Virtual Server Configuration.
 
 Your installation, if everything has worked properly, should now be working as expected.
 
+
+### Getting Help
+
+I'm always happy to help. If you have a problem along the way, or have a question, feel free to [post an Issue](https://github.com/jrstarke/TweetSeeker/issues/new).
+I check them frequently, and it helps me keep track of what problems there might be along the way.
+
