@@ -137,33 +137,51 @@ A production ready system should still have the API settings from the developmen
 above. If you have not build the development version, go back and do that first. There
 are common settings in the development version that will also be used by the production version.
 
+
+#### Configuring TweetSeeker
+
 The first step to taking this to production, like with the development build, its
 to fill in the settings variables. For this, we have created a settings.py file in the
 release folder, that will be used for production releases. 
 
-Like in the Development build above, you will need to set the [SECRET_KEY](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key).
+1. Set the [SECRET_KEY](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key).
 This can be the same as the secret key used in the development build above.
 
-Next you will need to set your [Databases](https://docs.djangoproject.com/en/dev/ref/settings/#databases)
-for production use. Again, for performance reasons, we would recommend a more robust.
+2. Set your [Databases](https://docs.djangoproject.com/en/dev/ref/settings/#databases)
+for production use. Again, for performance reasons, we would recommend a more robust database system.
+
+3. Set your [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.
+Because this is for a production system, this will likely be different than the one used in the development system, but
+again, it should be the absolute path.
+
+**Note:** Staticly served resources will not be served by default. Should you want to serve these files for testing purposes, you can 
+set the `DEBUG_STATIC_DIR` variable to the absolute path of your static directory on the production
+system.  This should not be used for more than testing the production installation, and these
+static resources should instead be served by the webserver directly. See deploying TweetSeeker below for more details.
+
+
+#### Initialize the database
 
 Before we Like with the development system above, we will now use django's [syncdb command](https://docs.djangoproject.com/en/dev/ref/django-admin/#syncdb) to create the associated tables in the database.
 Again, it is important to place yourself at the base of the project,
 and then tell django where it can find the settings file. This can be done using the
 `--settings=release.settings` flag.
 
-Finally, you should set your [TEMPLATES_DIRS](https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs) variable.
-Because this is for a production system, this will likely be different than the one used in the development system, but
-again, it should be the absolute path.
+To complete this, if you're in the base directory of TweetSeeker, you can run the command:
+
+`django-admin syncdb --settings=release.settings`
+
+
+#### Running TweetSeeker
 
 At this point, the production version of TweetSeeker is ready to be deployed. If you'd like to try it out,
 you can use `django-admin runserver --settings=release.settings` to run a local copy of it.
-You may need to set your python path, if you get a get a message such as `Could not import settings 'release.settings'`.
 
-**Note:** Staticly served resources will not be served by default. Should you want to serve these files for testing purposes, you can 
-set the `DEBUG_STATIC_DIR` variable to the absolute path of your static directory on the production
-system.  This should not be used for more than testing the production installation, and these
-static resources should instead be served by the webserver directly. See deploying TweetSeeker below for more details.
+To complete this, if you're in the base directory of TweetSeeker, you can run the command: 
+
+`django-admin runserver --settings=twitter_explorer.settings`
+
+**Note:** You may need to set your python path, if you get a get a message such as `Could not import settings 'release.settings'`.
 
 ### Deploying TweetSeeker
 
