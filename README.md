@@ -75,7 +75,8 @@ are working with the development build.
 #### Configuring your environment
 
 Before you can run TweetSeekers commands, you need to tell your environment where it can find TweetSeeker. 
-This can be done by setting your `PYTHONPATH` environment variable. 
+This can be done by setting your `PYTHONPATH` environment variable. The rest of these commands will be executed
+in your Shell of choice, be it a Linux Terminal or the Windows Command Line.
 
 ** Linux, Unix and Mac OS X **
 
