@@ -19,7 +19,29 @@ have a working installation of both.
 Getting Started
 ---------------
 
+
+
 ### Development build
+
+When you first clone or extract TweetSeeker, the base directory of the project should look something like
+
+     auth
+     django.wsgi
+     .git
+     layout
+     LICENSE
+     README.md
+     release
+     static
+     test
+     twitter
+     twitter_explorer
+
+There are three important files that we will be working with to get you up and running.
+
+1. *twitter_explorer/settings.py* : This is where you will locate main configuration for your installation of TweetSeeker, including the important locations and Twitter API keys.
+2. *release/settings.py* : This is where you will located the production configuration of your installation of TweetSeeker. We will cover this more in [Production Build](#production-build)
+3. *django.wsgi* : This will tell your webserver how to run TweetSeeker. We will cover this more in [Deploying TweetSeeker](#deploying-tweetseeker)
 
 To get started with a development build, you will need to set a number of settings 
 in the settings.py file, located within twitter_explorer.
