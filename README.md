@@ -135,6 +135,10 @@ To complete this, if you're in the base directory of TweetSeeker, you can run th
 
 `django-admin runserver --settings=twitter_explorer.settings`
 
+With this TweetSeeker will now be completely usable. 
+
+**Note:** The production build is not necessary to use TweetSeeker, but if you want a more stable, stand-alone installation,
+where you can use it on the fly, from any web-browser, I would recommend performing the Production build and deployment.
 
 ### Production Build
 
